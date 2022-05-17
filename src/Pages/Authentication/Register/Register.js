@@ -1,7 +1,9 @@
 import { async } from '@firebase/util';
 import React, { useRef } from 'react';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import Loading from '../../Shared/Loading/Loading';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Register = () => {
@@ -17,6 +19,21 @@ const Register = () => {
       ] = useCreateUserWithEmailAndPassword(auth);
 
       const [updateProfile, updating, UPError] = useUpdateProfile(auth);
+
+      const navigate = useNavigate();
+      let errorMessage;
+
+      if(loading || updating){
+          return <Loading></Loading>;
+      }
+
+      if(error || UPError){
+          errorMessage = error.message || UPError.message;
+      }
+
+      if(user){
+          navigate('/');
+      }
 
     const handleRegister = async event => {
         event.preventDefault();
@@ -53,9 +70,11 @@ const Register = () => {
                                 </label>
                                 <input ref={passwordRef} type="password" name="password" placeholder="password" className="input input-bordered" required />
                             </div>
+                            <p className='text-red-500'><small>{errorMessage}</small></p>
                             <div className="form-control mt-6">
                                 <input className='btn btn-primary' type="submit" value="Register" />
                             </div>
+                            <p><small>Alreadyb have an Account? <Link className='text-primary' to="/login">Please Login</Link></small></p>
                         </form>
                         <SocialLogin></SocialLogin>
                     </div>

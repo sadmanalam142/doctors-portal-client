@@ -9,7 +9,7 @@ const Service = ({ service, setTreatment }) => {
                 <p className={`${slots.length < 1 && 'text-red-500'}`}> {slots[0]} {slots.length < 1 && 'No Appointment Available'}</p>
                 <p className={`uppercase tex-sm ${slots.length < 1 && 'text-accent'}`}>{slots.length === 0 ? '' : slots.length} {slots.length < 1 ? 'try another day' : slots.length >= 2 ? 'spaces available' : 'space available'} </p>
                 <div className="card-actions justify-center">
-                    <label onClick={()=> setTreatment(service)} disabled={slots.length === 0} className="btn btn-secondary text-white" for="booking-modal" class="btn btn-secondary text-white">Book Appointmen</label>
+                    <label onClick={()=> setTreatment(service)} disabled={slots.length === 0} className="btn btn-secondary text-white" for="booking-modal" class="btn btn-secondary text-white bg-gradient-to-r from-primary to-secondary">Book Appointmen</label>
                 </div>
             </div>
         </div>

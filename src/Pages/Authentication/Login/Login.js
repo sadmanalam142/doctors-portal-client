@@ -1,7 +1,9 @@
+import { async } from '@firebase/util';
 import React, { useRef } from 'react';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { Link } from 'react-router-dom';
+import { useSignInWithEmailAndPassword, useUpdatePassword } from 'react-firebase-hooks/auth';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
+import Loading from '../../Shared/Loading/Loading';
 import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Login = () => {
@@ -14,11 +16,37 @@ const Login = () => {
         error,
       ] = useSignInWithEmailAndPassword(auth);
 
+      const [updatePassword, updating, UPError] = useUpdatePassword(auth);
+
+      const navigate = useNavigate();
+      const location = useLocation();
+      let errorMessage;
+
+      let from = location.state?.from?.pathname || "/";
+
+      if(loading || updating){
+          return <Loading></Loading>
+      }
+
+      if(error || UPError){
+          errorMessage = error.message || UPError.message;
+      }
+
+      if(user){
+        navigate(from, { replace: true });
+      }
+
       const handleSignIn = event => {
           event.preventDefault();
           const email = emailRef.current.value;
           const password = passwordRef.current.value;
           signInWithEmailAndPassword(email, password);
+      }
+
+      const handleResetPass = async event => {
+          event.preventDefault();
+          const email = emailRef.current.value;
+          await updatePassword(email);
       }
 
     return (
@@ -40,9 +68,10 @@ const Login = () => {
                                 </label>
                                 <input ref={passwordRef} type="password" placeholder="password" className="input input-bordered" required />
                                 <label className="label">
-                                    <a href="/" className="label-text-alt link link-hover">Forgot password?</a>
+                                    <a onClick={handleResetPass} href="/" className="label-text-alt link link-hover">Forgot password? click to reset</a>
                                 </label>
                             </div>
+                            <p className='text-red-500'><small>{errorMessage}</small></p>
                             <div className="form-control mt-6">
                                 <input className='btn btn-primary' type="submit" value="Login" />
                             </div>
