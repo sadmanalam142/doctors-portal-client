@@ -12,6 +12,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from './Pages/Dashboard/Dashboard/Dashboard';
 import MyAppointments from './Pages/Dashboard/MyAppointments/MyAppointments';
 import MyReviews from './Pages/Dashboard/MyReviews/MyReviews';
+import Users from './Pages/Dashboard/Users/Users';
+import RequireAdmin from './Pages/Authentication/RequireAdmin/RequireAdmin';
+import AddDoctors from './Pages/Dashboard/AddDoctors/AddDoctors';
+import ManageDoctors from './Pages/Dashboard/ManageDoctors/ManageDoctors';
 
 function App() {
   return (
@@ -24,14 +28,21 @@ function App() {
             <Appointment></Appointment>
           </RequireAuth>
         }></Route>
+
         <Route path='dashboard' element={
           <RequireAuth>
             <Dashboard></Dashboard>
           </RequireAuth>
         }>
+
           <Route index element={<MyAppointments></MyAppointments>}></Route>
           <Route path='reviews' element={<MyReviews></MyReviews>}></Route>
+          <Route path='users' element={<RequireAdmin><Users></Users></RequireAdmin>}></Route>
+          <Route path='addDoctors' element={<RequireAdmin><AddDoctors></AddDoctors></RequireAdmin>}></Route>
+          <Route path='manageDoctors' element={<RequireAdmin><ManageDoctors></ManageDoctors></RequireAdmin>}></Route>
+
         </Route>
+
         <Route path='/about' element={<About></About>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>

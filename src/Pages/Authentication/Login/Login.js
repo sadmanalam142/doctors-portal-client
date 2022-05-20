@@ -2,6 +2,7 @@ import { async } from '@firebase/util';
 import React, { useRef } from 'react';
 import { useSignInWithEmailAndPassword, useUpdatePassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import useToken from '../../../CustomHooks/UseToken';
 import auth from '../../../firebase.init';
 import Loading from '../../Shared/Loading/Loading';
 import SocialLogin from '../SocialLogin/SocialLogin';
@@ -14,40 +15,41 @@ const Login = () => {
         user,
         loading,
         error,
-      ] = useSignInWithEmailAndPassword(auth);
+    ] = useSignInWithEmailAndPassword(auth);
 
-      const [updatePassword, updating, UPError] = useUpdatePassword(auth);
+    const [updatePassword, updating, UPError] = useUpdatePassword(auth);
+    const [token] = useToken(user);
 
-      const navigate = useNavigate();
-      const location = useLocation();
-      let errorMessage;
+    const navigate = useNavigate();
+    const location = useLocation();
+    let errorMessage;
 
-      let from = location.state?.from?.pathname || "/";
+    let from = location.state?.from?.pathname || "/";
 
-      if(loading || updating){
-          return <Loading></Loading>
-      }
+    if (loading || updating) {
+        return <Loading></Loading>;
+    }
 
-      if(error || UPError){
-          errorMessage = error.message || UPError.message;
-      }
+    if (error || UPError) {
+        errorMessage = error.message || UPError.message;
+    }
 
-      if(user){
+    if (token) {
         navigate(from, { replace: true });
-      }
+    }
 
-      const handleSignIn = event => {
-          event.preventDefault();
-          const email = emailRef.current.value;
-          const password = passwordRef.current.value;
-          signInWithEmailAndPassword(email, password);
-      }
+    const handleSignIn = event => {
+        event.preventDefault();
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
+        signInWithEmailAndPassword(email, password);
+    }
 
-      const handleResetPass = async event => {
-          event.preventDefault();
-          const email = emailRef.current.value;
-          await updatePassword(email);
-      }
+    const handleResetPass = async event => {
+        event.preventDefault();
+        const email = emailRef.current.value;
+        await updatePassword(email);
+    }
 
     return (
         <div>
