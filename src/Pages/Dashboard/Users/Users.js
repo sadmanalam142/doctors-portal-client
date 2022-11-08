@@ -4,7 +4,7 @@ import Loading from '../../Shared/Loading/Loading';
 import UserTable from '../UserTable/UserTable';
 
 const Users = () => {
-    const { data: users, isLoading, refetch } = useQuery('users', () => fetch('http://localhost:5000/user', {
+    const { data: users, isLoading, refetch } = useQuery('users', () => fetch('https://doctors-portal-nh09.onrender.com/user', {
         method: 'GET',
         headers: {
             authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -21,8 +21,7 @@ const Users = () => {
                     <tr>
                         <th></th>
                         <th>Name</th>
-                        <th>Job</th>
-                        <th>Favorite Color</th>
+                        <th>Admin Control</th>
                     </tr>
                 </thead>
                 <tbody>

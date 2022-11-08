@@ -22,7 +22,7 @@ const BookingAppointment = ({ date, treatment, setTreatment, refetch }) => {
             phone: event.target.number.value
         };
 
-        fetch('http://localhost:5000/booking', {
+        fetch('https://doctors-portal-nh09.onrender.com/booking', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'

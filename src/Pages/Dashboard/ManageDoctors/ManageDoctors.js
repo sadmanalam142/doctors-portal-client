@@ -4,7 +4,7 @@ import Loading from '../../Shared/Loading/Loading';
 import DoctorsTable from '../DoctorsTable/DoctorsTable';
 
 const ManageDoctors = () => {
-    const { data: doctors, isLoading, refetch } = useQuery('doctors', () => fetch('http://localhost:5000/doctor', {
+    const { data: doctors, isLoading, refetch } = useQuery('doctors', () => fetch('https://doctors-portal-nh09.onrender.com/doctor', {
         headers: {
             authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }

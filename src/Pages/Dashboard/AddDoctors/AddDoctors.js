@@ -7,7 +7,7 @@ const AddDoctors = () => {
     const [services, setServices] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/service')
+        fetch('https://doctors-portal-nh09.onrender.com/service')
             .then(res => res.json())
             .then(data => setServices(data))
     }, []);
@@ -33,7 +33,7 @@ const AddDoctors = () => {
                         speciality: data.speciality,
                         img: img
                     }
-                    fetch('http://localhost:5000/doctor', {
+                    fetch('https://doctors-portal-nh09.onrender.com/doctor', {
                         method: 'POST',
                         headers:{
                             'content-type' : 'application/json',

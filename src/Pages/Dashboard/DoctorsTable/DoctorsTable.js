@@ -5,7 +5,7 @@ const DoctorsTable = ({ doctor, index, refetch }) => {
     const { img, name, speciality, email } = doctor;
 
     const handleDelete = email => {
-        fetch(`http://localhost:5000/doctor/${email}`, {
+        fetch(`https://doctors-portal-nh09.onrender.com/doctor/${email}`, {
             method: 'DELETE',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

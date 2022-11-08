@@ -11,7 +11,7 @@ const MyAppointments = () => {
 
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/booking?patient=${user.email}`, {
+            fetch(`https://doctors-portal-nh09.onrender.com/booking?patient=${user.email}`, {
                 method: 'GET',
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -33,7 +33,7 @@ const MyAppointments = () => {
             <table class="table w-full">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>No.</th>
                         <th>Name</th>
                         <th>Service Name</th>
                         <th>Date</th>

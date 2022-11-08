@@ -10,7 +10,7 @@ const AvailableAppointments = ({ date }) => {
     const [treatment, setTreatment] = useState(null);
 
     const bookingDate = format(date, 'PP');
-    const {data: services, isLoading, refetch} = useQuery(['available', bookingDate], () => fetch(`http://localhost:5000/available?date=${bookingDate}`)
+    const {data: services, isLoading, refetch} = useQuery(['available', bookingDate], () => fetch(`https://doctors-portal-nh09.onrender.com/available?date=${bookingDate}`)
             .then(res => res.json()))
 
             if(isLoading){
@@ -18,7 +18,7 @@ const AvailableAppointments = ({ date }) => {
             }
 
     // useEffect(() => {
-    //     fetch(`http://localhost:5000/available?date=${bookingDate}`)
+    //     fetch(`https://doctors-portal-nh09.onrender.com/available?date=${bookingDate}`)
     //         .then(res => res.json())
     //         .then(data => setSrvices(data))
     // }, [bookingDate]);
